@@ -9,9 +9,9 @@ pygmentsStyle = "monokai"
 title = "김태린"
 
 [params]
-  avatarAltText = "avatar"
+  avatarAltText = "김태린 프로필 사진"
   avatarSize = "size-m"
-  avatarURL = "/images/avatar.webp"
+  avatarURL = "/images/profile.jpg"
 
   customHeadHTML = """
     <!-- KaTeX -->
