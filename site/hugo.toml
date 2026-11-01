@@ -35,7 +35,7 @@ title = "김태린"
   """
 
   description = "영상과 생체신호를 활용한 AI를 공부하며, HCI와 헬스케어 AI에 관심이 있습니다."
-  footer = "The Marauders"
+  footer = "김태린"
   metaKeywords = ["blog", "gokarna", "hugo"]
   showBackToTopButton = true # true or false for "back to top" button on posts and pages
 
