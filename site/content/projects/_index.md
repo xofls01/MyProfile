@@ -3,8 +3,9 @@ title: "Projects"
 type: page
 ---
 
-## Hello, my projects are:
+## 프로젝트
 
-1. [Tatooine](/projects/tatooine/)
-2. [Hydra](/projects/hydra/)
-3. [Bludhaven](/projects/bludhaven/)
+사람의 행동과 상태를 이해하고 실제 문제 해결에 적용한 AI 프로젝트입니다.
+
+- 운전자 생체신호 기반 긴급 대응 안전 시스템
+- 수어 제스처 기반 비접촉 인증 시스템
