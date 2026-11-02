@@ -7,6 +7,21 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let turning = false;
   let fallback;
+  let prefetched = false;
+
+  // 이동 의도가 있을 때 About 문서를 미리 받아 넘김 뒤 로딩을 줄인다.
+  const prefetchAbout = () => {
+    if (prefetched) return;
+    prefetched = true;
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.href = cover.href;
+    document.head.append(link);
+  };
+
+  cover.addEventListener('pointerenter', prefetchAbout, { once: true });
+  cover.addEventListener('focus', prefetchAbout, { once: true });
+  cover.addEventListener('touchstart', prefetchAbout, { once: true, passive: true });
 
   const reset = () => {
     window.clearTimeout(fallback);
@@ -31,6 +46,7 @@
     event.preventDefault();
     if (turning) return;
 
+    prefetchAbout();
     turning = true;
     stage.setAttribute('aria-busy', 'true');
     stage.classList.add('is-turning');

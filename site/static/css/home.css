@@ -111,6 +111,7 @@ main#content {
 
 /* 왼쪽 가장자리가 책등이 되는 표지 */
 .home-cover-stage {
+  --cover-turn-duration: 840ms;
   position: relative;
   display: grid;
   min-width: 0;
@@ -120,7 +121,19 @@ main#content {
   perspective-origin: 0 50%;
 }
 
+.home-cover-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, #00000032, #00000008 55%, transparent);
+  opacity: 0;
+  transform: scaleX(0.15);
+  transform-origin: left center;
+}
+
 .about-cover {
+  --cover-rest-angle: 0deg;
   position: relative;
   z-index: 2;
   display: grid;
@@ -129,6 +142,8 @@ main#content {
   text-decoration: none;
   transform-origin: left center;
   transform-style: preserve-3d;
+  transform: rotateY(var(--cover-rest-angle));
+  transition: transform 260ms ease;
 }
 
 .about-cover:hover {
@@ -161,6 +176,25 @@ main#content {
   transition: background-color 240ms ease;
 }
 
+/* 책등의 접힌 선과 표면에 스치는 빛 */
+.about-cover-front::before,
+.about-cover-front::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.about-cover-front::before {
+  width: 18px;
+  background: linear-gradient(90deg, #00000010, #ffffff28 4px, #00000009 8px, transparent);
+}
+
+.about-cover-front::after {
+  background: linear-gradient(105deg, transparent 10%, #ffffff40 48%, #00000012 90%);
+  opacity: 0;
+}
+
 .cover-index {
   font-size: 0.75rem;
   font-weight: 500;
@@ -184,6 +218,10 @@ main#content {
 }
 
 @media (hover: hover) {
+  .about-cover:hover {
+    --cover-rest-angle: -2deg;
+  }
+
   .about-cover:hover .about-cover-front {
     background: #cececb;
   }
@@ -203,13 +241,36 @@ main#content {
   z-index: 3;
 }
 
+.is-turning.home-cover-stage::before {
+  animation: cover-cast-shadow var(--cover-turn-duration) linear forwards;
+}
+
 .is-turning .about-cover {
-  animation: open-book-cover 950ms cubic-bezier(0.45, 0, 0.2, 1) forwards;
+  animation: open-book-cover var(--cover-turn-duration) cubic-bezier(0.38, 0.02, 0.18, 1) forwards;
+}
+
+.is-turning .about-cover-front::after {
+  animation: cover-surface-light var(--cover-turn-duration) linear forwards;
 }
 
 @keyframes open-book-cover {
-  from { transform: rotateY(0deg); }
+  from { transform: rotateY(var(--cover-rest-angle)); }
   to { transform: rotateY(-180deg); }
+}
+
+@keyframes cover-cast-shadow {
+  0% { opacity: 0; transform: scaleX(0.15); }
+  25% { opacity: 0.5; transform: scaleX(0.6); }
+  48% { opacity: 0.8; transform: scaleX(1); }
+  78% { opacity: 0.25; transform: scaleX(0.45); }
+  100% { opacity: 0; transform: scaleX(0.15); }
+}
+
+@keyframes cover-surface-light {
+  0%, 100% { opacity: 0; }
+  22% { opacity: 0.45; }
+  45% { opacity: 0.8; }
+  65% { opacity: 0.15; }
 }
 
 /* 푸터를 왼쪽 소개 아래에 배치 */
@@ -342,10 +403,17 @@ main#content {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .is-turning .about-cover {
+  .is-turning .about-cover,
+  .is-turning.home-cover-stage::before,
+  .is-turning .about-cover-front::after {
     animation: none;
   }
 
+  .about-cover {
+    transform: none;
+  }
+
+  .about-cover,
   .about-cover-front,
   .cover-arrow {
     transition: none;
