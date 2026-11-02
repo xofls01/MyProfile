@@ -25,10 +25,21 @@ main#content {
 }
 
 .home-book {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 62fr) minmax(0, 38fr);
   min-height: max(660px, calc(100svh - 50px));
   overflow: clip;
+}
+
+/* 접히는 선은 회색 경계가 아니라 홈 전체의 왼쪽 끝에 둔다. */
+.home-book::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 8px;
+  pointer-events: none;
+  background: linear-gradient(90deg, #0000000c, transparent);
 }
 
 .home-intro {
@@ -109,41 +120,22 @@ main#content {
   outline-offset: 5px;
 }
 
-/* 왼쪽 가장자리가 책등이 되는 표지 */
+/* About으로 이동하는 회색 영역 */
 .home-cover-stage {
-  --cover-turn-duration: 840ms;
   position: relative;
   display: grid;
   min-width: 0;
   color: #262626;
   background: #eeeeec;
-  perspective: 2200px;
-  perspective-origin: 0 50%;
-}
-
-.home-cover-stage::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(90deg, #00000032, #00000008 55%, transparent);
-  opacity: 0;
-  transform: scaleX(0.15);
-  transform-origin: left center;
 }
 
 .about-cover {
-  --cover-rest-angle: 0deg;
   position: relative;
   z-index: 2;
   display: grid;
   min-width: 0;
   color: #262626;
   text-decoration: none;
-  transform-origin: left center;
-  transform-style: preserve-3d;
-  transform: rotateY(var(--cover-rest-angle));
-  transition: transform 260ms ease;
 }
 
 .about-cover:hover {
@@ -155,44 +147,16 @@ main#content {
   outline-offset: -8px;
 }
 
-.about-cover-front,
-.about-cover-back {
-  position: absolute;
-  inset: 0;
-  box-sizing: border-box;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
 .about-cover-front {
   position: relative;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 48px;
   padding: 60px clamp(28px, 4vw, 80px) 64px;
   background: #d8d8d5;
-  box-shadow: inset 1px 0 0 #00000012;
   transition: background-color 240ms ease;
-}
-
-/* 책등의 접힌 선과 표면에 스치는 빛 */
-.about-cover-front::before,
-.about-cover-front::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.about-cover-front::before {
-  width: 18px;
-  background: linear-gradient(90deg, #00000010, #ffffff28 4px, #00000009 8px, transparent);
-}
-
-.about-cover-front::after {
-  background: linear-gradient(105deg, transparent 10%, #ffffff40 48%, #00000012 90%);
-  opacity: 0;
 }
 
 .cover-index {
@@ -218,10 +182,6 @@ main#content {
 }
 
 @media (hover: hover) {
-  .about-cover:hover {
-    --cover-rest-angle: -2deg;
-  }
-
   .about-cover:hover .about-cover-front {
     background: #cececb;
   }
@@ -229,48 +189,6 @@ main#content {
   .about-cover:hover .cover-arrow {
     transform: translateX(6px);
   }
-}
-
-.about-cover-back {
-  background: linear-gradient(90deg, #e1e1de, #f0f0ee 12%, #e8e8e5);
-  box-shadow: -24px 0 48px #00000020;
-  transform: rotateY(180deg);
-}
-
-.home-cover-stage.is-turning {
-  z-index: 3;
-}
-
-.is-turning.home-cover-stage::before {
-  animation: cover-cast-shadow var(--cover-turn-duration) linear forwards;
-}
-
-.is-turning .about-cover {
-  animation: open-book-cover var(--cover-turn-duration) cubic-bezier(0.38, 0.02, 0.18, 1) forwards;
-}
-
-.is-turning .about-cover-front::after {
-  animation: cover-surface-light var(--cover-turn-duration) linear forwards;
-}
-
-@keyframes open-book-cover {
-  from { transform: rotateY(var(--cover-rest-angle)); }
-  to { transform: rotateY(-180deg); }
-}
-
-@keyframes cover-cast-shadow {
-  0% { opacity: 0; transform: scaleX(0.15); }
-  25% { opacity: 0.5; transform: scaleX(0.6); }
-  48% { opacity: 0.8; transform: scaleX(1); }
-  78% { opacity: 0.25; transform: scaleX(0.45); }
-  100% { opacity: 0; transform: scaleX(0.15); }
-}
-
-@keyframes cover-surface-light {
-  0%, 100% { opacity: 0; }
-  22% { opacity: 0.45; }
-  45% { opacity: 0.8; }
-  65% { opacity: 0.15; }
 }
 
 /* 푸터를 왼쪽 소개 아래에 배치 */
@@ -403,17 +321,6 @@ main#content {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .is-turning .about-cover,
-  .is-turning.home-cover-stage::before,
-  .is-turning .about-cover-front::after {
-    animation: none;
-  }
-
-  .about-cover {
-    transform: none;
-  }
-
-  .about-cover,
   .about-cover-front,
   .cover-arrow {
     transition: none;

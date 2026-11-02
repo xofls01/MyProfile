@@ -1,8 +1,14 @@
 {{ if .IsHome }}
   <link rel="stylesheet" href="{{ "css/home.css" | relURL }}">
-  <script defer src="{{ "js/home-cover.js" | relURL }}"></script>
 {{ end }}
 
 {{ if .Params.aboutstyle }}
   <link rel="stylesheet" href="{{ "css/about.css" | relURL }}">
+{{ end }}
+
+{{ with .Site.GetPage "/about" }}
+  {{ if or $.IsHome (eq $.RelPermalink .RelPermalink) }}
+    <link rel="stylesheet" href="{{ "css/page-turn.css" | relURL }}">
+    <script src="{{ "js/home-cover.js" | relURL }}" data-home-url="{{ $.Site.Home.RelPermalink }}" data-about-url="{{ .RelPermalink }}"></script>
+  {{ end }}
 {{ end }}
