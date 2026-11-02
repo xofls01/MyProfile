@@ -1,3 +1,7 @@
+{{ if .IsHome }}
+  <link rel="stylesheet" href="{{ "css/home.css" | relURL }}">
+{{ end }}
+
 {{ if .Params.aboutstyle }}
   <link rel="stylesheet" href="{{ "css/about.css" | relURL }}">
 {{ end }}
