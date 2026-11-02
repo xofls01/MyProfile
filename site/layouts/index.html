@@ -1,0 +1,48 @@
+{{ define "main" }}
+<div class="home-book">
+    <div class="home-intro">
+        <div class="home-profile">
+            <section class="home-about" aria-labelledby="home-name">
+                {{ with .Site.Params.AvatarURL }}
+                <div class="avatar">
+                    <img class="size-m" src="{{ $.Scratch.Get "avatarImgSrc" }}" alt="{{ $.Site.Params.AvatarAltText | default "프로필 사진" }}" width="168" height="224">
+                </div>
+                {{ end }}
+                <h1 id="home-name">{{ .Site.Title }}</h1>
+                {{ with .Site.Params.Description }}
+                <p class="home-description">{{ . }}</p>
+                {{ end }}
+            </section>
+
+            {{ with .Site.Params.SocialIcons }}
+            <div class="gk-social-icons">
+                <ul class="gk-social-icons-list">
+                    {{ range . }}
+                    <li class="gk-social-icon">
+                        <a href="{{ .url }}" target="_blank" rel="noopener noreferrer" aria-label="{{ if eq .name "email" }}이메일 보내기{{ else }}{{ .name }}{{ end }}">
+                            <img class="svg-inject" src="{{ relURL "svg/icons/" }}{{ .name | lower }}.svg" alt="">
+                        </a>
+                    </li>
+                    {{ end }}
+                </ul>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+
+    {{ with .Site.GetPage "/about" }}
+    <div class="home-cover-stage">
+        <a class="about-cover" href="{{ .RelPermalink }}" aria-label="About me 자기소개 페이지로 이동">
+            <span class="about-cover-front">
+                <span class="cover-index">01</span>
+                <span class="cover-action">About me <span class="cover-arrow" aria-hidden="true">→</span></span>
+            </span>
+            <span class="about-cover-back" aria-hidden="true"></span>
+        </a>
+    </div>
+    {{ end }}
+</div>
+{{ with .Content }}
+<section class="home-content">{{ . }}</section>
+{{ end }}
+{{ end }}
