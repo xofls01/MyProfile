@@ -6,7 +6,7 @@ locale = "en"
 # Choose one of emacs, trac or perldoc
 pygmentsStyle = "monokai"
 
-title = "김태린"
+title = "Taerin Kim"
 
 [params]
   avatarAltText = "김태린 프로필 사진"
@@ -34,7 +34,7 @@ title = "김태린"
     </script>
   """
 
-  description = "영상과 생체신호를 활용한 AI를 공부하며, HCI와 헬스케어 AI에 관심이 있습니다."
+  description = "전북대학교 컴퓨터인공지능학부에서 AI를 공부하고 있는 김태린입니다."
   footer = "김태린"
   metaKeywords = ["blog", "gokarna", "hugo"]
   showBackToTopButton = true # true or false for "back to top" button on posts and pages
