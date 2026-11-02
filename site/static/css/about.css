@@ -1,0 +1,122 @@
+/* About의 무채색 설정 */
+:root {
+  --accent-color: currentColor;
+  --dark-primary-color: 24, 24, 24;
+  --dark-secondary-color: #303030;
+  --dark-text-color: #eeeeee;
+}
+
+/* 페이지 폭과 바깥 여백 */
+main#content {
+  width: min(100%, 1080px);
+  margin-top: 110px;
+}
+
+.post.container {
+  display: block;
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 28px;
+  box-sizing: border-box;
+}
+
+/* About은 작은 페이지 표시로 사용 */
+.post-header-section h1 {
+  margin: 0 0 24px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.65;
+}
+
+/* 본문 */
+.post .post-content {
+  margin-top: 0;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Apple SD Gothic Neo",
+    "Malgun Gothic",
+    sans-serif;
+  font-size: 1rem;
+  line-height: 1.85;
+  letter-spacing: 0;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+/* 첫 소개 문장 */
+.post-content > p:first-child {
+  margin: 0 0 20px;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.04em;
+}
+
+/* 소개 아래 설명 */
+.post-content > p:nth-of-type(2) {
+  margin-bottom: 40px;
+}
+
+/* 섹션 제목과 구분선 */
+.post-content h2 {
+  margin: 44px 0 20px;
+  padding-top: 28px;
+  border-top: 1px solid
+    color-mix(in srgb, currentColor 20%, transparent);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+/* 관심 분야의 세부 제목 */
+.post-content h3 {
+  margin: 26px 0 10px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* 기술과 실행 계획 목록 */
+.post-content ul {
+  padding-left: 20px;
+}
+
+.post-content li {
+  margin: 12px 0;
+}
+
+.post-content strong {
+  font-weight: 600;
+}
+
+/* 링크 */
+.post-content a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.post-content a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+/* 모바일 */
+@media (max-width: 640px) {
+  main#content {
+    margin-top: 85px;
+  }
+
+  .post.container {
+    padding: 0 22px;
+  }
+
+  .post-content h2 {
+    margin-top: 32px;
+    padding-top: 24px;
+  }
+}
