@@ -1,8 +1,4 @@
-/* 홈의 사진·소개·표지·푸터를 한 장으로 넘기고 실제 About을 드러낸다. */
-:root {
-  --page-turn-duration: 1050ms;
-}
-
+/* 메뉴 글자는 고정하고 홈 전체를 유연한 종이처럼 넘긴다. */
 @view-transition {
   navigation: auto;
 }
@@ -11,76 +7,75 @@
   view-transition-name: site-header;
 }
 
-::view-transition-group(site-header) {
-  z-index: 2;
+.book-departure {
+  view-transition-name: none;
+}
+
+.book-capture-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.book-capture-strip {
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+}
+
+.book-capture-page {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+}
+
+.book-departure .header,
+.book-arrival .header {
+  z-index: 11;
+  background: transparent;
+}
+
+html.book-arrival::view-transition-group(*) {
+  z-index: 1;
+  transform-origin: left center;
   animation: none;
 }
 
-::view-transition-old(site-header) {
-  display: none;
+html.book-arrival::view-transition-image-pair(*) {
+  isolation: auto;
 }
 
-::view-transition-new(site-header) {
+html.book-arrival::view-transition-old(*),
+html.book-arrival::view-transition-new(*) {
   animation: none;
   mix-blend-mode: normal;
 }
 
-html.book-arrival::view-transition-group(root) {
-  z-index: 1;
-  animation: none;
-}
+html.book-arrival::view-transition-old(*) { z-index: 1; }
+html.book-arrival::view-transition-new(*) { z-index: 0; opacity: 0; }
 
-html.book-arrival::view-transition-image-pair(root) {
-  isolation: isolate;
-  perspective: 3200px;
+html.book-arrival::view-transition-group(root) {
+  z-index: 0;
 }
 
 html.book-arrival::view-transition-new(root) {
-  z-index: 0;
-  animation: none;
-  mix-blend-mode: normal;
+  opacity: 1;
 }
 
-html.book-arrival::view-transition-old(root) {
-  z-index: 1;
-  transform-origin: left center;
-  rotate: y 0deg;
-  backface-visibility: hidden;
-  mix-blend-mode: normal;
-  animation:
-    turn-home-page var(--page-turn-duration) cubic-bezier(0.42, 0.02, 0.28, 1) both,
-    bend-home-page var(--page-turn-duration) ease-in-out both,
-    shade-home-page var(--page-turn-duration) linear both;
+html.book-arrival::view-transition-group(site-header) {
+  z-index: 2;
 }
 
-@keyframes turn-home-page {
-  from { rotate: y 0deg; }
-  to { rotate: y -100deg; }
+html.book-arrival::view-transition-old(root),
+html.book-arrival::view-transition-old(site-header) {
+  display: none;
 }
 
-/* 회전과 별도로 가장자리의 곡률을 바꿔 판처럼 뻣뻣한 느낌을 줄인다. */
-@keyframes bend-home-page {
-  0%, 100% {
-    transform: skewY(0deg) scaleX(1);
-    clip-path: inset(0 round 0);
-  }
-  45% {
-    transform: skewY(-1deg) scaleX(0.97);
-    clip-path: inset(0 round 0 4% 10% 0);
-  }
-}
-
-@keyframes shade-home-page {
-  0% { filter: brightness(1); box-shadow: 0 0 0 transparent; }
-  45% { filter: brightness(0.98); box-shadow: 16px 0 70px #00000020; }
-  100% { filter: brightness(0.94); box-shadow: 4px 0 20px #0000000c; }
-}
-
-@media (max-width: 900px) {
-  :root { --page-turn-duration: 850ms; }
+html.book-arrival::view-transition-new(site-header) {
+  opacity: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
   @view-transition { navigation: none; }
-  html.book-arrival::view-transition-old(root) { animation: none; }
 }
