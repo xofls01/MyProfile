@@ -1,6 +1,7 @@
-/* 홈의 무채색 설정 */
+/* 책의 표지: 명조체 이름과 소개, 회색 표지와 쪽수 */
 :root {
   --accent-color: currentColor;
+  --light-primary-color: 250, 250, 250;
   --dark-primary-color: 24, 24, 24;
   --dark-secondary-color: #303030;
   --dark-text-color: #eeeeee;
@@ -73,7 +74,7 @@ main#content {
   display: block;
   width: 168px;
   height: 224px;
-  border-radius: 6px;
+  border-radius: 0;
   object-fit: cover;
 }
 
@@ -81,9 +82,10 @@ main#content {
   grid-column: 2;
   align-self: end;
   margin: 0;
-  font-size: clamp(2rem, 3.5vw, 3.5rem);
-  font-weight: 600;
-  line-height: 1.15;
+  font-family: Georgia, "AppleMyungjo", "Batang", serif;
+  font-size: clamp(2.4rem, 4vw, 3.8rem);
+  font-weight: 400;
+  line-height: 1.1;
   letter-spacing: -0.045em;
   overflow-wrap: anywhere;
 }
@@ -92,9 +94,10 @@ main#content {
   grid-column: 2;
   align-self: start;
   margin: 22px 0 0;
-  font-size: 0.95rem;
+  font-family: Georgia, "AppleMyungjo", "Batang", serif;
+  font-size: 0.9rem;
   font-weight: 400;
-  line-height: 1.9;
+  line-height: 2;
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
@@ -126,7 +129,7 @@ main#content {
   display: grid;
   min-width: 0;
   color: #262626;
-  background: #eeeeec;
+  background: #eeeeee;
 }
 
 .about-cover {
@@ -155,14 +158,16 @@ main#content {
   justify-content: space-between;
   gap: 48px;
   padding: 60px clamp(28px, 4vw, 80px) 64px;
-  background: #d8d8d5;
+  background: #d8d8d8;
   transition: background-color 240ms ease;
 }
 
 .cover-index {
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
+  font-family: Georgia, serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  font-variant-numeric: lining-nums;
+  letter-spacing: 0.04em;
 }
 
 .cover-action {
@@ -172,7 +177,8 @@ main#content {
   gap: 16px;
   padding-top: 20px;
   border-top: 1px solid #26262645;
-  font-size: 0.8rem;
+  font-family: Georgia, "AppleMyungjo", "Batang", serif;
+  font-size: 1rem;
   line-height: 1.6;
 }
 
@@ -183,7 +189,7 @@ main#content {
 
 @media (hover: hover) {
   .about-cover:hover .about-cover-front {
-    background: #cececb;
+    background: #cecece;
   }
 
   .about-cover:hover .cover-arrow {
