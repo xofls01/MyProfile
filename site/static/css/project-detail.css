@@ -1,6 +1,7 @@
-/* 상세 페이지: 큰 제목과 기본 정보, 목차와 읽기 영역 */
+/* 프로젝트 상세: 책의 여백 목차와 명조체 제목, 좁은 읽기 영역 */
 :root {
   --accent-color: currentColor;
+  --light-primary-color: 250, 250, 250;
   --dark-primary-color: 24, 24, 24;
   --dark-secondary-color: #303030;
   --dark-text-color: #eeeeee;
@@ -8,52 +9,57 @@
 
 main#content {
   width: 100%;
-  margin: 124px auto 0;
+  margin: 112px auto 0;
   padding: 0;
 }
 
 .project-detail {
   box-sizing: border-box;
-  width: min(100%, 1180px);
+  width: min(100%, 1000px);
   margin: 0 auto;
-  padding: 0 48px 32px;
+  padding: 0 48px 40px;
   font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
     "Malgun Gothic", sans-serif;
-  line-height: 1.9;
+  line-height: 1.95;
   word-break: keep-all;
   overflow-wrap: anywhere;
+}
+
+.project-detail-header,
+.project-detail > .book-navigation {
+  max-width: 680px;
+  margin-left: 204px;
 }
 
 .project-detail-kind {
   margin: 0 0 24px;
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: 400;
   opacity: 0.65;
 }
 
 .project-detail-header h1 {
-  max-width: 920px;
   margin: 0;
-  font-size: clamp(1.8rem, 3.7vw, 2.65rem);
-  font-weight: 600;
-  line-height: 1.4;
-  letter-spacing: -0.05em;
+  font-family: Georgia, "AppleMyungjo", "Batang", serif;
+  font-size: clamp(1.8rem, 3.3vw, 2.3rem);
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.035em;
   text-wrap: balance;
 }
 
 .project-detail-description {
-  max-width: 760px;
-  margin: 24px 0 36px;
-  font-size: 0.95rem;
-  opacity: 0.75;
+  margin: 24px 0 32px;
+  font-size: 0.9rem;
+  opacity: 0.8;
 }
 
 .project-detail-facts {
   display: flex;
   flex-wrap: wrap;
-  gap: 24px 64px;
+  gap: 20px 40px;
   margin: 0;
-  padding: 24px 0 32px;
+  padding: 24px 0 40px;
   border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
 }
 
@@ -69,22 +75,21 @@ main#content {
 
 .project-detail-facts dd {
   margin: 0;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
 }
 
 .project-detail-reading {
   display: grid;
-  grid-template-columns: 176px minmax(0, 1fr);
-  gap: 56px;
+  grid-template-columns: 156px minmax(0, 1fr);
+  gap: 48px;
   align-items: start;
-  border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
 }
 
 .project-detail-outline {
   position: sticky;
   top: 84px;
   padding-top: 32px;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
 }
 
 .project-detail-outline > p {
@@ -113,17 +118,17 @@ main#content {
 
 .project-detail-content {
   min-width: 0;
-  font-size: 0.9rem;
+  max-width: 680px;
+  font-size: 0.88rem;
 }
 
 .project-detail-content h2 {
-  margin: 44px 0 20px;
-  padding-top: 28px;
-  border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
-  font-size: 1.15rem;
-  font-weight: 600;
+  margin: 64px 0 28px;
+  font-family: Georgia, "AppleMyungjo", "Batang", serif;
+  font-size: 1.3rem;
+  font-weight: 400;
   line-height: 1.6;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
 }
 
 .project-detail-content > h2:first-child {
@@ -135,7 +140,7 @@ main#content {
 .project-detail-content h3 {
   margin: 32px 0 12px;
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.7;
   letter-spacing: -0.02em;
 }
@@ -171,7 +176,7 @@ main#content {
 
 .project-detail-content table th,
 .project-detail-content table td {
-  padding: 14px 18px;
+  padding: 12px 14px;
   border-bottom: 1px solid color-mix(in srgb, currentColor 18%, transparent);
   vertical-align: top;
 }
@@ -182,7 +187,7 @@ main#content {
 
 .project-detail-content table th:first-child,
 .project-detail-content table td:first-child {
-  min-width: 104px;
+  width: 30%;
 }
 
 .project-detail-content a {
@@ -208,6 +213,14 @@ main#content {
     padding-left: 32px;
   }
 
+  .project-detail-header,
+  .project-detail-reading,
+  .project-detail > .book-navigation {
+    max-width: 680px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
   .project-detail-reading {
     grid-template-columns: minmax(0, 1fr);
     gap: 0;
@@ -216,6 +229,7 @@ main#content {
   .project-detail-outline {
     position: static;
     padding: 24px 0;
+    border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
     border-bottom: 1px solid color-mix(in srgb, currentColor 18%, transparent);
   }
 
@@ -235,7 +249,7 @@ main#content {
 
 @media (max-width: 600px) {
   main#content {
-    margin-top: 94px;
+    margin-top: 88px;
   }
 
   .project-detail {
@@ -249,6 +263,12 @@ main#content {
   .project-detail-facts {
     flex-direction: column;
     gap: 18px;
+  }
+
+  .project-detail-content h2 {
+    margin-top: 48px;
+    margin-bottom: 24px;
+    font-size: 1.2rem;
   }
 
   .project-detail-content table th,
