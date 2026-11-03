@@ -1,0 +1,18 @@
+[Recent]
+  other = '최근 글'
+[Popular]
+  other = '글'
+[error404]
+  other = '페이지를 찾을 수 없습니다. 돌아가기:'
+[home]
+  other = '홈'
+[nothing]
+  other = '아직 등록된 내용이 없습니다.'
+[previous]
+  other = '이전'
+[next]
+  other = '다음'
+[tags]
+  other = '태그'
+[Posts]
+  other = '글'

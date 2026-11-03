@@ -1,8 +1,9 @@
 baseURL = "https://xofls01.github.io/MyProfile/"
-defaultContentLanguage = "en"
+defaultContentLanguage = "ko"
+languageCode = "ko"
 enableEmoji = true
 enableRobotsTXT = true
-locale = "en"
+locale = "ko"
 # Choose one of emacs, trac or perldoc
 pygmentsStyle = "monokai"
 
