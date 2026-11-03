@@ -1,4 +1,4 @@
-/* Home → About → Projects의 실제 문서 사이에서 화면 전체를 넘긴다. */
+/* Home ↔ About ↔ Projects의 실제 문서 사이에서 화면 전체를 넘긴다. */
 // API 참고: https://developer.chrome.com/docs/web-platform/view-transitions/cross-document
 (() => {
   const script = document.currentScript;
@@ -6,7 +6,13 @@
   const homeURL = new URL(script.dataset.homeUrl, window.location.href).href;
   const aboutURL = new URL(script.dataset.aboutUrl, window.location.href).href;
   const projectsURL = new URL(script.dataset.projectsUrl, window.location.href).href;
-  const routes = new Map([[homeURL, aboutURL], [aboutURL, projectsURL]]);
+  const pages = [homeURL, aboutURL, projectsURL];
+  const directionFor = (from, to) => {
+    const source = pages.indexOf(from);
+    const target = pages.indexOf(to);
+    if (source < 0 || target < 0 || Math.abs(target - source) !== 1) return null;
+    return target > source ? 'forward' : 'backward';
+  };
   const storageKey = 'taerin-home-page-turn';
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let captureLayer;
@@ -32,6 +38,8 @@
         top: `${-window.scrollY}px`, backgroundColor: request.paperColor,
       });
       page.append(document.querySelector('main#content').cloneNode(true));
+      // 화면에 고정된 맨 위로 버튼은 종이의 각 띠에 중복해서 담지 않는다.
+      page.querySelector('#btt-button')?.remove();
       const footer = document.querySelector('body > .footer');
       if (footer) page.append(footer.cloneNode(true));
       // 캡처용 복제에서도 클릭 직전의 색과 화살표 위치를 그대로 유지한다.
@@ -66,6 +74,7 @@
   };
 
   const animatePaper = (request) => {
+    const backward = request.direction === 'backward';
     const count = request.count;
     const step = request.width / count;
     const perspective = Math.max(1800, request.width * 2);
@@ -76,15 +85,18 @@
       const progress = frame / 60;
       let x = 0;
       let z = 0;
-      for (let index = 0; index < count; index++) {
-        const delay = 0.42 * (1 - (index + 0.5) / count);
+      for (let offset = 0; offset < count; offset++) {
+        // 이전 페이지로 갈 때는 책등과 움직이는 가장자리를 좌우로 뒤집는다.
+        const index = backward ? count - 1 - offset : offset;
+        const delay = 0.42 * (1 - (offset + 0.5) / count);
         const local = Math.max(0, Math.min(1, (progress - delay) / (1 - delay)));
         const angle = -Math.PI * local * local * (3 - 2 * local);
         const cosine = Math.cos(angle);
         const light = 0.94 + 0.06 * Math.abs(cosine);
         positions[index].push({
           offset: progress,
-          transform: `perspective(${perspective}px) translate3d(${x}px, 0, ${z}px) rotateY(${angle}rad)`,
+          transformOrigin: backward ? `${step}px center` : 'left center',
+          transform: `perspective(${perspective}px) translate3d(${backward ? request.width - x - step : x}px, 0, ${z}px) rotateY(${backward ? -angle : angle}rad)`,
         });
         fronts[index].push({ offset: progress, opacity: cosine >= 0 ? 1 : 0, filter: `brightness(${light})` });
         backs[index].push({ offset: progress, opacity: cosine < 0 ? 1 : 0, filter: `brightness(${light})` });
@@ -111,8 +123,9 @@
   const readRequest = () => {
     try {
       const request = JSON.parse(window.sessionStorage.getItem(storageKey));
-      return request && routes.has(request.from) && routes.get(request.from) === request.to &&
-        Date.now() - request.time < 8000 ? request : null;
+      const direction = request && directionFor(request.from, request.to);
+      const age = request && Date.now() - request.time;
+      return direction && age >= 0 && age < 8000 ? { ...request, direction } : null;
     } catch { return null; }
   };
 
@@ -182,7 +195,7 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     const cover = document.querySelector('.about-cover, [data-page-turn]');
-    if (!cover || routes.get(window.location.href) !== cover.href) return;
+    if (!cover || !directionFor(window.location.href, cover.href)) return;
     let prefetched = false;
     const prefetchNext = () => {
       if (prefetched) return;

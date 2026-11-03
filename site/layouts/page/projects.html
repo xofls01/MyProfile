@@ -30,7 +30,7 @@
 
     {{ with .Site.GetPage "/about" }}
     <nav class="projects-page-navigation" aria-label="이전 페이지">
-        <a href="{{ .RelPermalink }}"><span aria-hidden="true">←</span> About</a>
+        <a href="{{ .RelPermalink }}" data-page-turn aria-label="About 자기소개 페이지로 돌아가기"><span aria-hidden="true">←</span> About</a>
     </nav>
     {{ end }}
     {{ if .Site.Params.ShowBackToTopButton }}
