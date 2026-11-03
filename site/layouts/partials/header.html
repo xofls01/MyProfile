@@ -1,0 +1,53 @@
+<header class="header">
+    <nav class="header-nav" aria-label="주요 메뉴">
+        {{ if isset .Site.Params "avatarurl" }}
+        <div class="avatar">
+            <a href="{{ .Site.BaseURL }}">
+                <img src='{{ .Scratch.Get "avatarImgSrc" }}' alt="{{ .Site.Params.AvatarAltText | default "프로필 사진" }}">
+            </a>
+        </div>
+        {{ end }}
+
+        <div class="nav-title">
+            <a class="nav-brand" href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
+        </div>
+
+        <div class="nav-links">
+            {{ range .Site.Menus.main }}
+            <div class="nav-link">
+                <a href="{{ .URL | absURL }}" {{ if .Name }}aria-label="{{ .Name }}"{{ else }}aria-label="{{ .Identifier }}"{{ end }} {{ if .Params.NewPage }}target="_blank" rel="noopener noreferrer"{{ end }}>
+                    {{ .Pre | safeHTML }} {{ .Name }} {{ .Post | safeHTML }}
+                </a>
+            </div>
+            {{ end }}
+
+            <span class="nav-icons-divider" aria-hidden="true"></span>
+            <div class="nav-link dark-theme-toggle">
+                <button type="button" aria-label="다크 모드" aria-pressed="false">
+                    <span data-feather="moon" aria-hidden="true"></span>
+                </button>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <button type="button" id="hamburger-menu-toggle-target" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobile-menu">
+                    <span data-feather="menu" aria-hidden="true"></span>
+                </button>
+            </div>
+
+            <ul id="mobile-menu" class="nav-hamburger-list visibility-hidden">
+                {{ range .Site.Menus.main }}
+                <li class="nav-item">
+                    <a href="{{ .URL | absURL }}" {{ if .Name }}aria-label="{{ .Name }}"{{ else }}aria-label="{{ .Identifier }}"{{ end }} {{ if .Params.NewPage }}target="_blank" rel="noopener noreferrer"{{ end }}>
+                        {{ .Pre | safeHTML }} {{ .Name }} {{ .Post | safeHTML }}
+                    </a>
+                </li>
+                {{ end }}
+                <li class="nav-item dark-theme-toggle">
+                    <button type="button" aria-label="다크 모드" aria-pressed="false">
+                        <span data-feather="moon" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>

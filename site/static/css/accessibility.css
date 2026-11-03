@@ -1,0 +1,71 @@
+/* 버튼의 기존 아이콘 배치를 유지하고 키보드 초점을 표시한다. */
+.header button {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.nav-links .nav-link > button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  min-width: 44px;
+  padding: 0 6px;
+}
+
+.header .dark-theme-toggle,
+.header #hamburger-menu-toggle {
+  vertical-align: top;
+}
+
+.header button svg {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.nav-hamburger-list button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 50px;
+  padding: 0 6px;
+}
+
+.header a:focus-visible,
+.header button:focus-visible,
+#btt-button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -3px;
+}
+
+.header .nav-item > a {
+  display: block;
+  min-height: 50px;
+}
+
+#btt-button {
+  box-sizing: content-box;
+  display: block;
+  border: 0;
+  color: inherit;
+  line-height: 0;
+}
+
+#btt-button[hidden] {
+  display: none;
+}
+
+#content:focus {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
