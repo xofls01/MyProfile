@@ -6,6 +6,10 @@
   <link rel="stylesheet" href="{{ "css/about.css" | relURL }}">
 {{ end }}
 
+{{ if .Params.projectsstyle }}
+  <link rel="stylesheet" href="{{ "css/projects.css" | relURL }}">
+{{ end }}
+
 {{ $about := .Site.GetPage "/about" }}
 {{ $projects := .Site.GetPage "/projects" }}
 {{ if and $about $projects }}
