@@ -1,6 +1,7 @@
-/* Projects: 제목과 소개를 얇은 구분선으로 정리한 활동 목록 */
+/* Projects: 명조체 제목과 짧은 기록을 이어 읽는 책의 활동 목록 */
 :root {
   --accent-color: currentColor;
+  --light-primary-color: 250, 250, 250;
   --dark-primary-color: 24, 24, 24;
   --dark-secondary-color: #303030;
   --dark-text-color: #eeeeee;
@@ -8,18 +9,18 @@
 
 main#content {
   width: 100%;
-  margin: 124px auto 0;
+  margin: 112px auto 0;
   padding: 0;
 }
 
 .projects-page {
   box-sizing: border-box;
-  width: min(100%, 1180px);
+  width: min(100%, 1000px);
   margin: 0 auto;
-  padding: 0 48px 32px;
+  padding: 0 48px 40px;
   font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
     "Malgun Gothic", sans-serif;
-  line-height: 1.85;
+  line-height: 1.95;
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
@@ -27,64 +28,82 @@ main#content {
 .projects-page-header {
   display: flex;
   align-items: baseline;
-  gap: 12px;
-  margin-bottom: 36px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: 680px;
+  margin: 0 auto 36px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 20%, transparent);
 }
 
 .projects-page-header h1 {
   margin: 0;
-  font: inherit;
-  text-transform: uppercase;
+  font-family: Georgia, "AppleMyungjo", "Batang", serif;
+  font-size: clamp(2.6rem, 4.5vw, 3.3rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.045em;
 }
 
 .projects-page-number {
-  opacity: 0.55;
+  font-family: Georgia, serif;
+  font-size: 0.85rem;
+  font-variant-numeric: lining-nums;
+  opacity: 0.6;
+}
+
+.projects-intro,
+.project-list,
+.projects-page > .book-navigation {
+  max-width: 680px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .projects-intro {
-  margin-bottom: 64px;
-  max-width: 840px;
-  font-size: clamp(1.6rem, 2.7vw, 2.2rem);
-  font-weight: 600;
-  line-height: 1.55;
-  letter-spacing: -0.045em;
-  text-wrap: balance;
+  margin-bottom: 48px;
+  font-size: 0.9rem;
+  opacity: 0.8;
 }
 
 .projects-intro p {
-  margin: 0;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .project-list {
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
   list-style: none;
 }
 
 .project-entry {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.35fr);
-  align-items: start;
-  column-gap: 36px;
-  border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
-  padding: 36px 0 40px;
+  padding: 40px 0;
+}
+
+.project-entry:first-child {
+  padding-top: 0;
+}
+
+.project-entry + .project-entry {
+  border-top: 1px solid color-mix(in srgb, currentColor 14%, transparent);
 }
 
 .project-title {
   min-width: 0;
-  margin: 0;
+  margin: 0 0 20px;
+  font-family: Georgia, "AppleMyungjo", "Batang", serif;
   font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.65;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.025em;
 }
 
 .project-subtitle {
   display: block;
-  margin-top: 10px;
+  margin-top: 6px;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+    "Malgun Gothic", sans-serif;
   font-size: 0.8rem;
   font-weight: 400;
   line-height: 1.7;
@@ -94,7 +113,7 @@ main#content {
 
 .project-summary {
   min-width: 0;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
 }
 
 .project-summary p {
@@ -139,16 +158,11 @@ main#content {
     padding-right: 32px;
     padding-left: 32px;
   }
-
-  .project-entry {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 20px;
-  }
 }
 
 @media (max-width: 600px) {
   main#content {
-    margin-top: 94px;
+    margin-top: 88px;
   }
 
   .projects-page {
@@ -157,6 +171,7 @@ main#content {
 
   .projects-page-header {
     margin-bottom: 28px;
+    padding-bottom: 20px;
   }
 
   .projects-intro {
@@ -164,12 +179,11 @@ main#content {
   }
 
   .project-entry {
-    gap: 18px;
-    padding: 28px 0 32px;
+    padding: 32px 0;
   }
 
   .project-title {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
   }
 }
 
