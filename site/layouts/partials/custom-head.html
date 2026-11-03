@@ -6,9 +6,11 @@
   <link rel="stylesheet" href="{{ "css/about.css" | relURL }}">
 {{ end }}
 
-{{ with .Site.GetPage "/about" }}
-  {{ if or $.IsHome (eq $.RelPermalink .RelPermalink) }}
+{{ $about := .Site.GetPage "/about" }}
+{{ $projects := .Site.GetPage "/projects" }}
+{{ if and $about $projects }}
+  {{ if or .IsHome (eq .RelPermalink $about.RelPermalink) (eq .RelPermalink $projects.RelPermalink) }}
     <link rel="stylesheet" href="{{ "css/page-turn.css" | relURL }}">
-    <script src="{{ "js/home-cover.js" | relURL }}" data-home-url="{{ $.Site.Home.RelPermalink }}" data-about-url="{{ .RelPermalink }}"></script>
+    <script src="{{ "js/home-cover.js" | relURL }}" data-home-url="{{ .Site.Home.RelPermalink }}" data-about-url="{{ $about.RelPermalink }}" data-projects-url="{{ $projects.RelPermalink }}"></script>
   {{ end }}
 {{ end }}

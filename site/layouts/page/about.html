@@ -7,6 +7,14 @@
     <div class="about-content">
         {{ .Content }}
     </div>
+    {{ with .Site.GetPage "/projects" }}
+    <nav class="about-page-navigation" aria-label="다음 페이지">
+        <a class="about-next-page" href="{{ .RelPermalink }}" data-page-turn aria-label="Projects 프로젝트 목록으로 이동">
+            <span>Projects</span>
+            <span class="about-next-arrow" aria-hidden="true">→</span>
+        </a>
+    </nav>
+    {{ end }}
     {{ if .Site.Params.ShowBackToTopButton }}
         {{ partial "back-to-top.html" . }}
     {{ end }}

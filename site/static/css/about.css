@@ -182,6 +182,45 @@ main#content {
   outline-offset: 5px;
 }
 
+.about-page-navigation {
+  margin-top: 44px;
+  border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+}
+
+.about-next-page {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 88px;
+  color: inherit;
+  text-decoration: none;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.about-next-arrow {
+  font-size: 2rem;
+  transition: transform 240ms ease;
+}
+
+.about-next-page:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 5px;
+}
+
+@media (hover: hover) {
+  .about-next-page:hover .about-next-arrow {
+    transform: translateX(6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-next-arrow {
+    transition: none;
+  }
+}
+
 @media (max-width: 900px) {
   .about-page {
     padding-right: 32px;

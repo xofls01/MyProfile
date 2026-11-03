@@ -1,4 +1,4 @@
-/* 메뉴 글자는 고정하고 홈 전체를 유연한 종이처럼 넘긴다. */
+/* 메뉴 글자는 고정하고 Home과 About을 유연한 종이처럼 넘긴다. */
 @view-transition {
   navigation: auto;
 }

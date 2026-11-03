@@ -1,10 +1,12 @@
-/* 홈과 About의 실제 문서 사이에서 화면 전체를 넘긴다. */
+/* Home → About → Projects의 실제 문서 사이에서 화면 전체를 넘긴다. */
 // API 참고: https://developer.chrome.com/docs/web-platform/view-transitions/cross-document
 (() => {
   const script = document.currentScript;
-  if (!script?.dataset.homeUrl || !script.dataset.aboutUrl) return;
+  if (!script?.dataset.homeUrl || !script.dataset.aboutUrl || !script.dataset.projectsUrl) return;
   const homeURL = new URL(script.dataset.homeUrl, window.location.href).href;
   const aboutURL = new URL(script.dataset.aboutUrl, window.location.href).href;
+  const projectsURL = new URL(script.dataset.projectsUrl, window.location.href).href;
+  const routes = new Map([[homeURL, aboutURL], [aboutURL, projectsURL]]);
   const storageKey = 'taerin-home-page-turn';
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let captureLayer;
@@ -33,7 +35,7 @@
       const footer = document.querySelector('body > .footer');
       if (footer) page.append(footer.cloneNode(true));
       // 캡처용 복제에서도 클릭 직전의 색과 화살표 위치를 그대로 유지한다.
-      for (const selector of ['.about-cover-front', '.cover-arrow']) {
+      for (const selector of ['.about-cover-front', '.cover-arrow', '.about-next-arrow']) {
         const original = document.querySelector(selector);
         const copy = page.querySelector(selector);
         if (original && copy) {
@@ -109,7 +111,7 @@
   const readRequest = () => {
     try {
       const request = JSON.parse(window.sessionStorage.getItem(storageKey));
-      return request?.from === homeURL && request.to === aboutURL &&
+      return request && routes.has(request.from) && routes.get(request.from) === request.to &&
         Date.now() - request.time < 8000 ? request : null;
     } catch { return null; }
   };
@@ -118,14 +120,15 @@
   window.addEventListener('pageswap', (event) => {
     if (!event.viewTransition) return;
     const destination = event.activation?.entry?.url;
-    if (reducedMotion.matches || window.location.href !== homeURL ||
-        !readRequest() || (destination && destination !== aboutURL)) {
+    const pending = readRequest();
+    if (reducedMotion.matches || !pending || window.location.href !== pending.from ||
+        (destination && destination !== pending.to)) {
       event.viewTransition.skipTransition();
       return;
     }
     try {
       const request = {
-        ...readRequest(), width: window.innerWidth, height: window.innerHeight,
+        ...pending, width: window.innerWidth, height: window.innerHeight,
         pageWidth: document.documentElement.clientWidth,
         pageHeight: Math.max(document.documentElement.scrollHeight, window.innerHeight),
         count: window.innerWidth <= 900 ? 14 : 24,
@@ -150,7 +153,7 @@
     if (!event.viewTransition) return;
     if (!request || ![14, 24].includes(request.count) ||
         Math.abs(window.innerWidth - request.width) > 1 ||
-        window.location.href !== aboutURL || reducedMotion.matches) {
+        window.location.href !== request.to || reducedMotion.matches) {
       event.viewTransition.skipTransition();
       return;
     }
@@ -170,18 +173,18 @@
     }
   });
 
-  window.addEventListener('pageshow', () => {
-    if (window.location.href === homeURL) {
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted || window.location.href === homeURL) {
       cleanCapture();
       clearRequest();
     }
   });
 
   document.addEventListener('DOMContentLoaded', () => {
-    const cover = document.querySelector('.about-cover');
-    if (!cover) return;
+    const cover = document.querySelector('.about-cover, [data-page-turn]');
+    if (!cover || routes.get(window.location.href) !== cover.href) return;
     let prefetched = false;
-    const prefetchAbout = () => {
+    const prefetchNext = () => {
       if (prefetched) return;
       prefetched = true;
       const link = document.createElement('link');
@@ -189,16 +192,16 @@
       link.href = cover.href;
       document.head.append(link);
     };
-    cover.addEventListener('pointerenter', prefetchAbout, { once: true });
-    cover.addEventListener('focus', prefetchAbout, { once: true });
-    cover.addEventListener('touchstart', prefetchAbout, { once: true, passive: true });
+    cover.addEventListener('pointerenter', prefetchNext, { once: true });
+    cover.addEventListener('focus', prefetchNext, { once: true });
+    cover.addEventListener('touchstart', prefetchNext, { once: true, passive: true });
     cover.addEventListener('click', (event) => {
       if (event.defaultPrevented || event.button !== 0 || event.metaKey ||
           event.ctrlKey || event.shiftKey || event.altKey || reducedMotion.matches) return;
-      prefetchAbout();
+      prefetchNext();
       try {
         window.sessionStorage.setItem(storageKey, JSON.stringify({
-          from: homeURL, to: aboutURL, time: Date.now(),
+          from: window.location.href, to: cover.href, time: Date.now(),
         }));
       } catch { /* 저장소를 사용할 수 없어도 실제 링크로 이동한다. */ }
       // 이동을 가로채지 않아 미지원 브라우저와 키보드에서도 링크가 동작한다.
