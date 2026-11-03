@@ -175,6 +175,8 @@ main#content {
 }
 
 .about-page-navigation {
+  display: flex;
+  justify-content: flex-end;
   margin-top: 44px;
   border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
   padding-top: 24px;
