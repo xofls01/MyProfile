@@ -1,4 +1,4 @@
-/* Projects: 명조체 제목과 짧은 기록을 이어 읽는 책의 활동 목록 */
+/* Projects: 영문 장 제목은 명조체, 활동명과 소개는 고딕체 */
 :root {
   --accent-color: currentColor;
   --light-primary-color: 250, 250, 250;
@@ -92,9 +92,9 @@ main#content {
 .project-title {
   min-width: 0;
   margin: 0 0 20px;
-  font-family: Georgia, "AppleMyungjo", "Batang", serif;
+  font-family: inherit;
   font-size: 1.25rem;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.65;
   letter-spacing: -0.025em;
 }

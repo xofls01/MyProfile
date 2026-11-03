@@ -1,4 +1,10 @@
 /* 페이지 순서에 맞춘 공통 이동과 종이 넘김 */
+.header,
+.book-navigation {
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+    "Malgun Gothic", sans-serif;
+}
+
 .book-navigation {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -6,8 +12,6 @@
   margin-top: 44px;
   padding-top: 24px;
   border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
-  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
-    "Malgun Gothic", sans-serif;
   font-size: 0.85rem;
   font-weight: 400;
   line-height: 1.85;
