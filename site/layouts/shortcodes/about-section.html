@@ -1,0 +1,8 @@
+{{ $title := .Get "title" }}
+{{ $id := printf "about-%s" ($title | anchorize) }}
+<section class="about-section" aria-labelledby="{{ $id }}">
+    <h2 id="{{ $id }}">{{ $title }}</h2>
+    <div class="about-section-body{{ if eq $title "관심 분야" }} about-interests{{ end }}">
+        {{ .Inner | .Page.RenderString (dict "display" "block") }}
+    </div>
+</section>

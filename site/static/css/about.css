@@ -1,4 +1,4 @@
-/* About의 무채색 설정 */
+/* About: 여백, 얇은 선, 글자 크기로 구분하는 책의 본문 */
 :root {
   --accent-color: currentColor;
   --dark-primary-color: 24, 24, 24;
@@ -6,117 +6,232 @@
   --dark-text-color: #eeeeee;
 }
 
-/* 페이지 폭과 바깥 여백 */
 main#content {
-  width: min(100%, 1080px);
-  margin-top: 110px;
-}
-
-.post.container {
-  display: block;
   width: 100%;
-  max-width: 880px;
-  margin: 0 auto;
-  padding: 0 28px;
+  margin: 124px auto 0;
+  padding: 0;
+}
+
+.about-page {
   box-sizing: border-box;
-}
-
-/* About은 작은 페이지 표시로 사용 */
-.post-header-section h1 {
-  margin: 0 0 24px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  opacity: 0.65;
-}
-
-/* 본문 */
-.post .post-content {
-  margin-top: 0;
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Apple SD Gothic Neo",
-    "Malgun Gothic",
-    sans-serif;
-  font-size: 1rem;
+  width: min(100%, 1180px);
+  margin: 0 auto;
+  padding: 0 48px 32px;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+    "Malgun Gothic", sans-serif;
   line-height: 1.85;
-  letter-spacing: 0;
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
 
-/* 첫 소개 문장 */
-.post-content > p:first-child {
+.about-page-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 36px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+}
+
+.about-page-header h1 {
+  margin: 0;
+  font: inherit;
+  text-transform: uppercase;
+}
+
+.about-page-number {
+  opacity: 0.55;
+}
+
+.about-content > p:first-child {
+  max-width: 840px;
   margin: 0 0 20px;
-  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-size: clamp(1.6rem, 2.7vw, 2.2rem);
   font-weight: 600;
-  line-height: 1.5;
-  letter-spacing: -0.04em;
+  line-height: 1.55;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
 }
 
-/* 소개 아래 설명 */
-.post-content > p:nth-of-type(2) {
-  margin-bottom: 40px;
+.about-content > p:nth-child(2) {
+  max-width: 700px;
+  margin: 0 0 64px;
+  font-size: 0.95rem;
+  opacity: 0.75;
 }
 
-/* 섹션 제목과 구분선 */
-.post-content h2 {
-  margin: 44px 0 20px;
-  padding-top: 28px;
-  border-top: 1px solid
-    color-mix(in srgb, currentColor 20%, transparent);
-  font-size: 1.2rem;
+.about-section {
+  display: grid;
+  grid-template-columns: 148px minmax(0, 1fr);
+  gap: 40px;
+  border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  padding: 36px 0 44px;
+}
+
+.about-section h2 {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.8;
+  letter-spacing: -0.02em;
+  opacity: 0.7;
+}
+
+.about-section-body {
+  min-width: 0;
+  font-size: 0.9rem;
+}
+
+.about-section-body h3 {
+  margin: 0 0 16px;
+  font-size: 1.05rem;
   font-weight: 600;
+  line-height: 1.6;
   letter-spacing: -0.025em;
 }
 
-/* 관심 분야의 세부 제목 */
-.post-content h3 {
-  margin: 26px 0 10px;
-  font-size: 1.05rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
+.about-section-body p {
+  margin: 0 0 16px;
 }
 
-/* 기술과 실행 계획 목록 */
-.post-content ul {
+.about-section-body:not(.about-interests) > h3:not(:first-child) {
+  margin-top: 32px;
+}
+
+.about-section-body > :last-child {
+  margin-bottom: 0;
+}
+
+.about-interests {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 36px;
+}
+
+.about-interests > h3,
+.about-interests > p {
+  margin: 0;
+}
+
+.about-interests > h3:nth-of-type(1) {
+  grid-area: 1 / 1;
+}
+
+.about-interests > p:nth-of-type(1) {
+  grid-area: 2 / 1;
+}
+
+.about-interests > h3:nth-of-type(2) {
+  grid-area: 1 / 2;
+}
+
+.about-interests > p:nth-of-type(2) {
+  grid-area: 2 / 2;
+}
+
+.about-section-body ul {
+  margin: 16px 0;
   padding-left: 20px;
 }
 
-.post-content li {
-  margin: 12px 0;
+.about-section-body li {
+  margin: 10px 0;
 }
 
-.post-content strong {
+/* 각 기술과 실제 활용 사례가 하나의 항목으로 읽히게 한다. */
+.about-section-body > ul:first-child {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-section-body > ul:first-child li {
+  margin: 0 0 24px;
+}
+
+.about-section-body > ul:first-child li:last-child {
+  margin-bottom: 0;
+}
+
+.about-section-body > ul:first-child strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.about-content strong {
   font-weight: 600;
 }
 
-/* 링크 */
-.post-content a {
+.about-content > p:last-child {
+  margin: 8px 0 0;
+  padding-top: 24px;
+  border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  text-align: right;
+  font-size: 0.8rem;
+}
+
+.about-content a {
   color: inherit;
   text-decoration: underline;
-  text-underline-offset: 4px;
+  text-underline-offset: 5px;
 }
 
-.post-content a:focus-visible {
+.about-content a:focus-visible {
   outline: 2px solid currentColor;
-  outline-offset: 4px;
+  outline-offset: 5px;
 }
 
-/* 모바일 */
-@media (max-width: 640px) {
+@media (max-width: 900px) {
+  .about-page {
+    padding-right: 32px;
+    padding-left: 32px;
+  }
+
+  .about-section {
+    grid-template-columns: 108px minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .about-interests {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .about-interests > h3:nth-of-type(n),
+  .about-interests > p:nth-of-type(n) {
+    grid-area: auto;
+  }
+
+  .about-interests > h3:nth-of-type(2) {
+    margin-top: 16px;
+  }
+}
+
+@media (max-width: 600px) {
   main#content {
-    margin-top: 85px;
+    margin-top: 94px;
   }
 
-  .post.container {
-    padding: 0 22px;
+  .about-page {
+    padding: 0 24px 24px;
   }
 
-  .post-content h2 {
-    margin-top: 32px;
-    padding-top: 24px;
+  .about-page-header {
+    margin-bottom: 28px;
+  }
+
+  .about-content > p:nth-child(2) {
+    margin-bottom: 40px;
+  }
+
+  .about-section {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    padding: 26px 0 32px;
+  }
+
+  .about-section h2 {
+    font-size: 0.8rem;
   }
 }
