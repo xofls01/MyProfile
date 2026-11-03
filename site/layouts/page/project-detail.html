@@ -1,7 +1,10 @@
 {{ define "main" }}
 <article class="project-detail" aria-labelledby="project-detail-title">
     <header class="project-detail-header">
-        <p class="project-detail-kind">{{ .Params.projectkind }}</p>
+        <div class="project-detail-topline">
+            <p class="project-detail-kind">{{ .Params.projectkind }}</p>
+            <span class="project-detail-number" aria-hidden="true">{{ partial "book-page-number.html" . }}</span>
+        </div>
         <h1 id="project-detail-title">{{ .Title }}</h1>
         <p class="project-detail-description">{{ .Description }}</p>
         <dl class="project-detail-facts">

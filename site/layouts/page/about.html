@@ -2,7 +2,7 @@
 <article class="about-page" aria-labelledby="about-title">
     <header class="about-page-header">
         <h1 id="about-title">{{ .Title }}</h1>
-        <span class="about-page-number" aria-hidden="true">02</span>
+        <span class="about-page-number" aria-hidden="true">{{ partial "book-page-number.html" . }}</span>
     </header>
     <div class="about-content">
         {{ .Content }}

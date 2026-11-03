@@ -1,0 +1,8 @@
+{{ $number := "" }}
+{{ $url := .RelPermalink }}
+{{ range $index, $entry := partial "book-pages.html" . }}
+    {{ if eq $entry.page.RelPermalink $url }}
+        {{ $number = printf "%02d" (add $index 1) }}
+    {{ end }}
+{{ end }}
+{{ return $number }}

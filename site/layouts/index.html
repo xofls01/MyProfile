@@ -17,12 +17,12 @@
         </div>
     </div>
 
-    {{ with .Site.GetPage "/about" }}
+    {{ with .Site.GetPage "/contents" }}
     <div class="home-cover-stage">
-        <a class="about-cover" href="{{ .RelPermalink }}" aria-label="About me 자기소개 페이지로 이동">
+        <a class="about-cover" href="{{ .RelPermalink }}" aria-label="Contents 목차 페이지로 이동">
             <span class="about-cover-front">
-                <span class="cover-index">01</span>
-                <span class="cover-action">About me <span class="cover-arrow" aria-hidden="true">→</span></span>
+                <span class="cover-index">{{ partial "book-page-number.html" $ }}</span>
+                <span class="cover-action">Contents <span class="cover-arrow" aria-hidden="true">→</span></span>
             </span>
         </a>
     </div>

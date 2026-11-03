@@ -1,0 +1,27 @@
+{{ define "main" }}
+<article class="contents-page" aria-labelledby="contents-title">
+    <header class="contents-page-header">
+        <h1 id="contents-title">{{ .Title }}</h1>
+        <span class="contents-page-number" aria-hidden="true">{{ partial "book-page-number.html" . }}</span>
+    </header>
+    <div class="contents-intro">{{ .Content }}</div>
+
+    <nav aria-label="포트폴리오 목차">
+        <ol class="contents-list" role="list">
+            {{ range $entry := partial "book-pages.html" . }}
+                {{ if and (not $entry.page.IsHome) (ne $entry.page.RelPermalink $.RelPermalink) }}
+                <li class="contents-entry{{ if $entry.page.Params.projectdetailstyle }} contents-entry-detail{{ end }}">
+                    <a href="{{ $entry.page.RelPermalink }}" data-page-turn>
+                        <span class="contents-label">{{ $entry.page.Title }}</span>
+                        <span class="contents-leader" aria-hidden="true"></span>
+                        <span class="contents-page-number" aria-hidden="true">{{ partial "book-page-number.html" $entry.page }}</span>
+                    </a>
+                </li>
+                {{ end }}
+            {{ end }}
+        </ol>
+    </nav>
+
+    {{ partial "book-navigation.html" . }}
+</article>
+{{ end }}

@@ -139,7 +139,7 @@ main#content {
   outline-offset: 5px;
 }
 
-/* About으로 이동하는 회색 영역 */
+/* 목차로 이동하는 회색 영역 */
 .home-cover-stage {
   position: relative;
   display: grid;

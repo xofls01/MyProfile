@@ -133,6 +133,12 @@
     } catch { return null; }
   };
 
+  const skipTransition = (transition) => {
+    // 기본 링크 이동에서는 애니메이션을 생략하므로 ready의 취소도 처리한다.
+    transition.ready.catch(() => {});
+    transition.skipTransition();
+  };
+
   // 이 이벤트는 첫 화면이 그려지기 전에 등록해야 하므로 head에서 읽는다.
   window.addEventListener('pageswap', (event) => {
     if (!event.viewTransition) return;
@@ -140,7 +146,7 @@
     const pending = readRequest();
     if (reducedMotion.matches || !pending || window.location.href !== pending.from ||
         (destination && destination !== pending.to)) {
-      event.viewTransition.skipTransition();
+      skipTransition(event.viewTransition);
       return;
     }
     try {
@@ -160,7 +166,7 @@
       console.debug('페이지 넘김 캡처를 생략하고 기본 이동을 사용합니다.', error);
       clearRequest();
       cleanCapture();
-      event.viewTransition.skipTransition();
+      skipTransition(event.viewTransition);
     }
   });
 
@@ -171,7 +177,7 @@
     if (!request || ![14, 24].includes(request.count) ||
         Math.abs(window.innerWidth - request.width) > 1 ||
         window.location.href !== request.to || reducedMotion.matches) {
-      event.viewTransition.skipTransition();
+      skipTransition(event.viewTransition);
       return;
     }
     try {
@@ -180,12 +186,12 @@
       document.body.append(captureLayer);
       event.viewTransition.ready.then(() => animatePaper(request)).catch((error) => {
         console.debug('종이 넘김을 생략하고 기본 이동을 사용합니다.', error);
-        event.viewTransition.skipTransition();
+        skipTransition(event.viewTransition);
         cleanCapture();
       });
       event.viewTransition.finished.finally(cleanCapture).catch(() => {});
     } catch {
-      event.viewTransition.skipTransition();
+      skipTransition(event.viewTransition);
       cleanCapture();
     }
   });
