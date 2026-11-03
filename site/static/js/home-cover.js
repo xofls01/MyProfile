@@ -1,12 +1,15 @@
-/* Home ↔ About ↔ Projects의 실제 문서 사이에서 화면 전체를 넘긴다. */
+/* 공통 페이지 순서에 따라 실제 문서 사이에서 화면 전체를 넘긴다. */
 // API 참고: https://developer.chrome.com/docs/web-platform/view-transitions/cross-document
 (() => {
   const script = document.currentScript;
-  if (!script?.dataset.homeUrl || !script.dataset.aboutUrl || !script.dataset.projectsUrl) return;
-  const homeURL = new URL(script.dataset.homeUrl, window.location.href).href;
-  const aboutURL = new URL(script.dataset.aboutUrl, window.location.href).href;
-  const projectsURL = new URL(script.dataset.projectsUrl, window.location.href).href;
-  const pages = [homeURL, aboutURL, projectsURL];
+  if (!script?.dataset.bookPages) return;
+  let pages;
+  try {
+    pages = JSON.parse(script.dataset.bookPages)
+      .map((path) => new URL(path, window.location.href).href);
+  } catch { return; }
+  if (pages.length < 2) return;
+  const homeURL = pages[0];
   const directionFor = (from, to) => {
     const source = pages.indexOf(from);
     const target = pages.indexOf(to);
@@ -43,7 +46,7 @@
       const footer = document.querySelector('body > .footer');
       if (footer) page.append(footer.cloneNode(true));
       // 캡처용 복제에서도 클릭 직전의 색과 화살표 위치를 그대로 유지한다.
-      for (const selector of ['.about-cover-front', '.cover-arrow', '.about-next-arrow']) {
+      for (const selector of ['.about-cover-front', '.cover-arrow']) {
         const original = document.querySelector(selector);
         const copy = page.querySelector(selector);
         if (original && copy) {
@@ -188,36 +191,40 @@
 
   window.addEventListener('pageshow', (event) => {
     if (event.persisted || window.location.href === homeURL) {
+      // Home으로 들어오는 넘김은 첫 표시·캐시 복원 이벤트가 중간에 지우지 않는다.
+      if (readRequest()?.to === window.location.href ||
+          document.documentElement.classList.contains('book-arrival')) return;
       cleanCapture();
       clearRequest();
     }
   });
 
   document.addEventListener('DOMContentLoaded', () => {
-    const cover = document.querySelector('.about-cover, [data-page-turn]');
-    if (!cover || !directionFor(window.location.href, cover.href)) return;
-    let prefetched = false;
-    const prefetchNext = () => {
-      if (prefetched) return;
-      prefetched = true;
-      const link = document.createElement('link');
-      link.rel = 'prefetch';
-      link.href = cover.href;
-      document.head.append(link);
-    };
-    cover.addEventListener('pointerenter', prefetchNext, { once: true });
-    cover.addEventListener('focus', prefetchNext, { once: true });
-    cover.addEventListener('touchstart', prefetchNext, { once: true, passive: true });
-    cover.addEventListener('click', (event) => {
-      if (event.defaultPrevented || event.button !== 0 || event.metaKey ||
-          event.ctrlKey || event.shiftKey || event.altKey || reducedMotion.matches) return;
-      prefetchNext();
-      try {
-        window.sessionStorage.setItem(storageKey, JSON.stringify({
-          from: window.location.href, to: cover.href, time: Date.now(),
-        }));
-      } catch { /* 저장소를 사용할 수 없어도 실제 링크로 이동한다. */ }
-      // 이동을 가로채지 않아 미지원 브라우저와 키보드에서도 링크가 동작한다.
+    const prefetched = new Set();
+    document.querySelectorAll('.about-cover, [data-page-turn]').forEach((link) => {
+      if (!directionFor(window.location.href, link.href)) return;
+      const prefetchPage = () => {
+        if (prefetched.has(link.href)) return;
+        prefetched.add(link.href);
+        const resource = document.createElement('link');
+        resource.rel = 'prefetch';
+        resource.href = link.href;
+        document.head.append(resource);
+      };
+      link.addEventListener('pointerenter', prefetchPage, { once: true });
+      link.addEventListener('focus', prefetchPage, { once: true });
+      link.addEventListener('touchstart', prefetchPage, { once: true, passive: true });
+      link.addEventListener('click', (event) => {
+        if (event.defaultPrevented || event.button !== 0 || event.metaKey ||
+            event.ctrlKey || event.shiftKey || event.altKey || reducedMotion.matches) return;
+        prefetchPage();
+        try {
+          window.sessionStorage.setItem(storageKey, JSON.stringify({
+            from: window.location.href, to: link.href, time: Date.now(),
+          }));
+        } catch { /* 저장소를 사용할 수 없어도 실제 링크로 이동한다. */ }
+        // 이동을 가로채지 않아 미지원 브라우저와 키보드에서도 링크가 동작한다.
+      });
     });
   });
 })();

@@ -1,0 +1,16 @@
+{{ $site := .Site }}
+{{ $pages := slice }}
+{{ $entries := slice
+    (dict "path" "/" "label" "Home")
+    (dict "path" "/about" "label" "About")
+    (dict "path" "/projects" "label" "Projects")
+    (dict "path" "/projects/driver-safety-system" "label" "운전자 안전 시스템")
+    (dict "path" "/projects/gesture-authentication" "label" "제스처 인증 시스템")
+}}
+{{ range $entries }}
+    {{ $label := .label }}
+    {{ with $site.GetPage .path }}
+        {{ $pages = $pages | append (dict "page" . "label" $label) }}
+    {{ end }}
+{{ end }}
+{{ return $pages }}

@@ -10,11 +10,15 @@
   <link rel="stylesheet" href="{{ "css/projects.css" | relURL }}">
 {{ end }}
 
-{{ $about := .Site.GetPage "/about" }}
-{{ $projects := .Site.GetPage "/projects" }}
-{{ if and $about $projects }}
-  {{ if or .IsHome (eq .RelPermalink $about.RelPermalink) (eq .RelPermalink $projects.RelPermalink) }}
-    <link rel="stylesheet" href="{{ "css/page-turn.css" | relURL }}">
-    <script src="{{ "js/home-cover.js" | relURL }}" data-home-url="{{ .Site.Home.RelPermalink }}" data-about-url="{{ $about.RelPermalink }}" data-projects-url="{{ $projects.RelPermalink }}"></script>
-  {{ end }}
+{{ $bookPages := partial "book-pages.html" . }}
+{{ $bookURLs := slice }}
+{{ $isBookPage := false }}
+{{ $currentURL := .RelPermalink }}
+{{ range $bookPages }}
+  {{ $bookURLs = $bookURLs | append .page.RelPermalink }}
+  {{ if eq $currentURL .page.RelPermalink }}{{ $isBookPage = true }}{{ end }}
+{{ end }}
+{{ if $isBookPage }}
+  <link rel="stylesheet" href="{{ "css/page-turn.css" | relURL }}">
+  <script src="{{ "js/home-cover.js" | relURL }}" data-book-pages="{{ $bookURLs | jsonify }}"></script>
 {{ end }}

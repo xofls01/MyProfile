@@ -1,0 +1,24 @@
+{{ $pages := partial "book-pages.html" . }}
+{{ $current := -1 }}
+{{ $url := .RelPermalink }}
+{{ range $index, $entry := $pages }}
+    {{ if eq $entry.page.RelPermalink $url }}{{ $current = $index }}{{ end }}
+{{ end }}
+{{ if ge $current 0 }}
+<nav class="book-navigation" aria-label="이전·다음 페이지">
+    {{ if gt $current 0 }}
+        {{ $previous := index $pages (sub $current 1) }}
+        <a class="book-nav-previous" href="{{ $previous.page.RelPermalink }}" data-page-turn aria-label="이전 페이지: {{ $previous.label }}">
+            <span aria-hidden="true">←</span>
+            <span class="book-nav-label">{{ $previous.label }}</span>
+        </a>
+    {{ end }}
+    {{ if lt (add $current 1) (len $pages) }}
+        {{ $next := index $pages (add $current 1) }}
+        <a class="book-nav-next" href="{{ $next.page.RelPermalink }}" data-page-turn aria-label="다음 페이지: {{ $next.label }}">
+            <span class="book-nav-label">{{ $next.label }}</span>
+            <span aria-hidden="true">→</span>
+        </a>
+    {{ end }}
+</nav>
+{{ end }}

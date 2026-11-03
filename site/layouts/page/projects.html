@@ -27,11 +27,7 @@
         {{ end }}
     </ul>
 
-    {{ with .Site.GetPage "/about" }}
-    <nav class="projects-page-navigation" aria-label="이전 페이지">
-        <a href="{{ .RelPermalink }}" data-page-turn aria-label="About 자기소개 페이지로 돌아가기"><span aria-hidden="true">←</span> About</a>
-    </nav>
-    {{ end }}
+    {{ partial "book-navigation.html" . }}
     {{ if .Site.Params.ShowBackToTopButton }}
         {{ partial "back-to-top.html" . }}
     {{ end }}

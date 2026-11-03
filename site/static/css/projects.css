@@ -123,21 +123,6 @@ main#content {
   transition: transform 240ms ease;
 }
 
-.projects-page-navigation {
-  border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
-  padding-top: 24px;
-}
-
-.projects-page-navigation a {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  min-height: 44px;
-  color: inherit;
-  font-size: 0.85rem;
-  text-decoration: none;
-}
-
 .projects-page a:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 5px;
