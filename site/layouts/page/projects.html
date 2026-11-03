@@ -6,10 +6,9 @@
     </header>
     <div class="projects-intro">{{ .Content }}</div>
 
-    <ol class="project-list" role="list">
-        {{ range $index, $activity := .Params.activities }}
+    <ul class="project-list" role="list">
+        {{ range $activity := .Params.activities }}
         <li class="project-entry">
-            <span class="project-number" aria-hidden="true">{{ printf "%02d" (add $index 1) }}</span>
             <h2 class="project-title">
                 {{ $activity.title }}
                 {{ with $activity.subtitle }}<span class="project-subtitle">{{ . }}</span>{{ end }}
@@ -26,7 +25,7 @@
             </div>
         </li>
         {{ end }}
-    </ol>
+    </ul>
 
     {{ with .Site.GetPage "/about" }}
     <nav class="projects-page-navigation" aria-label="이전 페이지">
