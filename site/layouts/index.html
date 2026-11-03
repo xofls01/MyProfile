@@ -14,19 +14,6 @@
                 {{ end }}
             </section>
 
-            {{ with .Site.Params.SocialIcons }}
-            <div class="gk-social-icons">
-                <ul class="gk-social-icons-list">
-                    {{ range . }}
-                    <li class="gk-social-icon">
-                        <a href="{{ .url }}" target="_blank" rel="noopener noreferrer" aria-label="{{ if eq .name "email" }}이메일 보내기{{ else }}{{ .name }}{{ end }}">
-                            <img class="svg-inject" src="{{ relURL "svg/icons/" }}{{ .name | lower }}.svg" alt="">
-                        </a>
-                    </li>
-                    {{ end }}
-                </ul>
-            </div>
-            {{ end }}
         </div>
     </div>
 

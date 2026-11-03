@@ -102,20 +102,36 @@ main#content {
   overflow-wrap: anywhere;
 }
 
-/* 연락 링크를 소개 영역에 맞춰 정렬 */
-.gk-social-icons {
-  margin: 28px 0 0;
-  padding-left: calc(168px + clamp(28px, 3vw, 56px));
-  box-sizing: border-box;
-  text-align: left;
+/* 연락 링크는 표지 하단에 작게 모은다. */
+.home-contact-links {
+  margin: 0 0 12px;
 }
 
-.gk-social-icons .gk-social-icons-list {
+.home-contact-links .gk-social-icons-list {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
   margin: 0;
 }
 
-.gk-social-icons-list .gk-social-icon {
-  margin: 0 16px 0 0;
+.home-contact-links .gk-social-icon {
+  width: 44px;
+  height: 44px;
+  margin: 0;
+}
+
+.home-contact-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+}
+
+.home-contact-links img,
+.home-contact-links svg {
+  width: 18px;
+  height: 18px;
 }
 
 .gk-social-icon a:focus-visible {
@@ -250,9 +266,6 @@ main#content {
     height: 150px;
   }
 
-  .gk-social-icons {
-    padding-left: 136px;
-  }
 }
 
 /* 작은 화면에서는 아래쪽 표지를 터치해서 넘긴다. */
@@ -312,10 +325,6 @@ main#content {
     margin: 0;
   }
 
-  .gk-social-icons {
-    margin-top: 24px;
-    padding-left: 0;
-  }
 
   .home-cover-stage {
     min-height: 360px;

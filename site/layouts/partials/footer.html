@@ -1,0 +1,55 @@
+<footer class="footer">
+    {{ if .IsHome }}
+    {{ with .Site.Params.SocialIcons }}
+    <nav class="gk-social-icons home-contact-links" aria-label="연락처">
+        <ul class="gk-social-icons-list">
+            {{ range . }}
+            <li class="gk-social-icon">
+                <a href="{{ .url }}" target="_blank" rel="noopener noreferrer" aria-label="{{ if eq .name "email" }}이메일 보내기{{ else }}{{ .name }}{{ end }}">
+                    <img class="svg-inject" src="{{ relURL "svg/icons/" }}{{ .name | lower }}.svg" alt="">
+                </a>
+            </li>
+            {{ end }}
+        </ul>
+    </nav>
+    {{ end }}
+    {{ end }}
+
+    <!-- Option for user to inject custom html -->
+    {{ if .Site.Params.CustomFooterHTML }}
+    {{ .Site.Params.CustomFooterHTML | safeHTML }}
+    {{ end }}
+
+    {{ .Scratch.Set "footerText" "" }}
+
+    {{ if (.Site.Params.Footer) }}
+
+        {{ if and (eq .Kind "page") (.Date) }}
+            {{ .Scratch.Add "footerText" (.Date | time.Format "2006") }}
+        {{ else }}
+            {{ .Scratch.Add "footerText" (time.Now | time.Format "2006") }}
+        {{ end }}
+
+        {{ if and (eq .Kind "page") (.Lastmod) (gt (time.Format "2006" .Lastmod) (time.Format "2006" .Date)) }}
+            {{ .Scratch.Add "footerText" "-" }}
+            {{ .Scratch.Add "footerText" (.Lastmod | time.Format "2006") }}
+        {{ end }}
+
+        {{ .Scratch.Add "footerText" " " }}
+        {{ .Scratch.Add "footerText" .Site.Params.Footer }}
+
+        {{ if and (eq .Kind "page") (.Site.Copyright) }}
+            {{ .Scratch.Add "footerText" " " }}
+            {{ .Scratch.Add "footerText" .Site.Copyright }}
+        {{ end }}
+
+    {{ end }}
+
+    {{ if (gt (.Scratch.Get "footerText" | len) 0) }}
+        <span>&copy; {{ .Scratch.Get "footerText" | markdownify }}</span>
+    {{ end }}
+
+    <span>
+        Made with &#10084;&#65039; using <a target="_blank" href="https://github.com/gokarna-theme/gokarna-hugo">Gokarna</a>
+    </span>
+</footer>
