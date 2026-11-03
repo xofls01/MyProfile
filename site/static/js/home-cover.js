@@ -11,8 +11,9 @@
   if (pages.length < 2) return;
   const homeURL = pages[0];
   const directionFor = (from, to) => {
-    const source = pages.indexOf(from);
-    const target = pages.indexOf(to);
+    // 본문 목차로 이동한 뒤에도 같은 문서의 책 넘김을 유지한다.
+    const source = pages.indexOf(from.split('#', 1)[0]);
+    const target = pages.indexOf(to.split('#', 1)[0]);
     if (source < 0 || target < 0 || Math.abs(target - source) !== 1) return null;
     return target > source ? 'forward' : 'backward';
   };

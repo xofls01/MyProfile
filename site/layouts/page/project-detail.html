@@ -1,0 +1,28 @@
+{{ define "main" }}
+<article class="project-detail" aria-labelledby="project-detail-title">
+    <header class="project-detail-header">
+        <p class="project-detail-kind">{{ .Params.projectkind }}</p>
+        <h1 id="project-detail-title">{{ .Title }}</h1>
+        <p class="project-detail-description">{{ .Description }}</p>
+        <dl class="project-detail-facts">
+            <div><dt>수행 기간</dt><dd>{{ .Params.period }}</dd></div>
+            <div><dt>진행 상태</dt><dd>{{ .Params.status }}</dd></div>
+        </dl>
+    </header>
+
+    <div class="project-detail-reading">
+        <aside class="project-detail-outline" aria-label="프로젝트 목차">
+            <p>이 페이지에서</p>
+            {{ .Fragments.ToHTML 2 2 false }}
+        </aside>
+        <div class="project-detail-content">
+            {{ .Content }}
+        </div>
+    </div>
+
+    {{ partial "book-navigation.html" . }}
+    {{ if .Site.Params.ShowBackToTopButton }}
+        {{ partial "back-to-top.html" . }}
+    {{ end }}
+</article>
+{{ end }}

@@ -1,0 +1,258 @@
+/* 상세 페이지: 큰 제목과 기본 정보, 목차와 읽기 영역 */
+:root {
+  --accent-color: currentColor;
+  --dark-primary-color: 24, 24, 24;
+  --dark-secondary-color: #303030;
+  --dark-text-color: #eeeeee;
+}
+
+main#content {
+  width: 100%;
+  margin: 124px auto 0;
+  padding: 0;
+}
+
+.project-detail {
+  box-sizing: border-box;
+  width: min(100%, 1180px);
+  margin: 0 auto;
+  padding: 0 48px 32px;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+    "Malgun Gothic", sans-serif;
+  line-height: 1.9;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.project-detail-kind {
+  margin: 0 0 24px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  opacity: 0.65;
+}
+
+.project-detail-header h1 {
+  max-width: 920px;
+  margin: 0;
+  font-size: clamp(1.8rem, 3.7vw, 2.65rem);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
+}
+
+.project-detail-description {
+  max-width: 760px;
+  margin: 24px 0 36px;
+  font-size: 0.95rem;
+  opacity: 0.75;
+}
+
+.project-detail-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 64px;
+  margin: 0;
+  padding: 24px 0 32px;
+  border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+}
+
+.project-detail-facts div {
+  min-width: 0;
+}
+
+.project-detail-facts dt {
+  margin-bottom: 6px;
+  font-size: 0.7rem;
+  opacity: 0.65;
+}
+
+.project-detail-facts dd {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.project-detail-reading {
+  display: grid;
+  grid-template-columns: 176px minmax(0, 1fr);
+  gap: 56px;
+  align-items: start;
+  border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+}
+
+.project-detail-outline {
+  position: sticky;
+  top: 84px;
+  padding-top: 32px;
+  font-size: 0.75rem;
+}
+
+.project-detail-outline > p {
+  margin: 0 0 14px;
+  font-size: 0.65rem;
+  opacity: 0.6;
+}
+
+.project-detail-outline ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-detail-outline a {
+  display: block;
+  padding: 8px 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.project-detail-outline a:hover {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+.project-detail-content {
+  min-width: 0;
+  font-size: 0.9rem;
+}
+
+.project-detail-content h2 {
+  margin: 44px 0 20px;
+  padding-top: 28px;
+  border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: -0.03em;
+}
+
+.project-detail-content > h2:first-child {
+  margin-top: 0;
+  padding-top: 32px;
+  border-top: 0;
+}
+
+.project-detail-content h3 {
+  margin: 32px 0 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.7;
+  letter-spacing: -0.02em;
+}
+
+.project-detail-content h2,
+.project-detail-content h3 {
+  scroll-margin-top: 84px;
+}
+
+.project-detail-content p {
+  margin: 0 0 18px;
+}
+
+.project-detail-content ul {
+  margin: 20px 0;
+  padding-left: 22px;
+}
+
+.project-detail-content li {
+  margin: 12px 0;
+  padding-left: 4px;
+}
+
+.project-detail-content table {
+  width: 100%;
+  margin: 24px 0;
+  font-size: 0.8rem;
+}
+
+.project-detail-content table thead {
+  background: color-mix(in srgb, currentColor 5%, transparent);
+}
+
+.project-detail-content table th,
+.project-detail-content table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  vertical-align: top;
+}
+
+.project-detail-content table th {
+  font-weight: 600;
+}
+
+.project-detail-content table th:first-child,
+.project-detail-content table td:first-child {
+  min-width: 104px;
+}
+
+.project-detail-content a {
+  color: inherit;
+  text-underline-offset: 5px;
+}
+
+.project-detail a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 5px;
+}
+
+.project-detail-content hr {
+  height: 0;
+  margin: 32px 0;
+  border: 0;
+  border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+}
+
+@media (max-width: 900px) {
+  .project-detail {
+    padding-right: 32px;
+    padding-left: 32px;
+  }
+
+  .project-detail-reading {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .project-detail-outline {
+    position: static;
+    padding: 24px 0;
+    border-bottom: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  }
+
+  .project-detail-outline nav > ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 24px;
+  }
+
+  .project-detail-outline a {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 600px) {
+  main#content {
+    margin-top: 94px;
+  }
+
+  .project-detail {
+    padding: 0 24px 24px;
+  }
+
+  .project-detail-kind {
+    margin-bottom: 18px;
+  }
+
+  .project-detail-facts {
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .project-detail-content table th,
+  .project-detail-content table td {
+    padding: 12px;
+  }
+}

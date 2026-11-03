@@ -10,6 +10,10 @@
   <link rel="stylesheet" href="{{ "css/projects.css" | relURL }}">
 {{ end }}
 
+{{ if .Params.projectdetailstyle }}
+  <link rel="stylesheet" href="{{ "css/project-detail.css" | relURL }}">
+{{ end }}
+
 {{ $bookPages := partial "book-pages.html" . }}
 {{ $bookURLs := slice }}
 {{ $isBookPage := false }}
