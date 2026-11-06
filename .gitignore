@@ -18,3 +18,7 @@ exampleSite/resources/
 **/resources/_gen/
 **/.hugo_build.lock
 /.github-pages-setup-backups/
+
+# Local work notes
+/portfolio_handoff.txt
+/codex_portfolio_handoff.txt
